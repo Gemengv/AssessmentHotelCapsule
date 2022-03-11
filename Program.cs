@@ -14,7 +14,7 @@ namespace AssessmentCapsuleHotel
                 switch (SelectFromMenu())
                 {
                     case "1":
-                        //Check in guest
+                    CheckIn(capsules);
                         break;
                     case "2":
                         //check out guess
@@ -23,7 +23,6 @@ namespace AssessmentCapsuleHotel
                         //view guests 10 capsules, 5 from above, 5 from below
                         break;
                     case "4":
-                        //Exit
                         Console.WriteLine(@"====
 Are you sure you want to exit?
 All data will be lost.
@@ -40,6 +39,30 @@ Exit [y/n]: ");
                 }
             }
 
+        }
+
+        private static string[] CheckIn(string[] assignCapsule)
+        {
+            Console.WriteLine("Guest Name: ");
+            string guestName = Console.ReadLine();
+            Console.WriteLine("Capsule #[1-100]: ");
+            string checkRoom = Console.ReadLine();
+            for(int i = 0; i < assignCapsule.Length; i++)
+            {
+                if (string.IsNullOrEmpty(assignCapsule[i]))
+                {
+                    assignCapsule[i] = guestName;
+                    Console.WriteLine($"Capsule is empty. {guestName} is booked in capsule# {checkRoom }");
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Capsule is taken, please choose another room.");
+                    checkRoom = Console.ReadLine();
+                }
+            }
+
+            return assignCapsule;
         }
 
         private static string SelectFromMenu()
