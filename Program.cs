@@ -31,7 +31,7 @@ namespace AssessmentCapsuleHotel
                     case "2":
                         if (IsAllCapsulesAvailable(capsules))
                         {
-                            Console.WriteLine("All rooms are unoccupied.");
+                            Console.WriteLine("\nAll rooms are unoccupied.");
                         }
                         else
                         {
@@ -55,7 +55,7 @@ Exit [y/n]: ");
                         }
                         break;
                     default:
-                        Console.WriteLine("Invalid entry. Please enter a number between 1 and 4.");
+                        Console.WriteLine("\nInvalid entry. Please enter a number between 1 and 4.");
                         break;
 
                     
@@ -106,13 +106,13 @@ Exit [y/n]: ");
                     }
                     else
                     {
-                        Console.WriteLine($"Number is out of bounds. Please enter in a number between 1 and {totalCapsuleAvail}: ");
+                        Console.WriteLine($"\nNumber is out of bounds. Please enter in a number between 1 and {totalCapsuleAvail}: ");
                         validate = Console.ReadLine();
                     }
                 }
             else
             {
-                Console.WriteLine($"Please enter in a number between 1 and {totalCapsuleAvail}: ");
+                Console.WriteLine($"\nPlease enter in a number between 1 and {totalCapsuleAvail}: ");
                 validate = Console.ReadLine();
             }
 
@@ -179,13 +179,14 @@ Exit [y/n]: ");
                 if (assignCapsule[checkRoom] == "unoccupied")
                 {
                     assignCapsule[checkRoom] = guestName;
-                    Console.WriteLine($"Capsule is empty. {guestName} is booked in capsule# {checkRoom + 1}");
+                    Console.WriteLine($"\nCapsule is empty. {guestName} is booked in capsule #{checkRoom + 1}");
                     isEmpty = false;
                 }
                 else
                 {
-                    Console.WriteLine($"Capsule# {checkRoom} is taken, please choose another room.");
-                    checkRoom = int.Parse(Console.ReadLine());
+                    Console.WriteLine($"\nCapsule #{checkRoom + 1} is taken, please choose another room.");
+                    roomInput = ValidateAll((Console.ReadLine()), totalCapsuleAvail);
+                    checkRoom = int.Parse(roomInput);
                 }
             }
 
@@ -194,33 +195,34 @@ Exit [y/n]: ");
 
         private static string[] CheckOut(string[] clearCapsule, int totalCapsuleAvail)
         {
-            bool isOccupied = true; 
+            bool isOccupied = true;
 
             Console.WriteLine("Which capsule are you checking out?");
             // validate if input is an int
             string input = ValidateAll((Console.ReadLine()), totalCapsuleAvail);
             // parse string to int type
-            int checkRoom = int.Parse(input)-1;
-            
+            int checkRoom = int.Parse(input) - 1;
+
             while (isOccupied)
             {
-                    // array index [5] 
-                if(clearCapsule[checkRoom] == "unoccupied")
+                // array index [5] 
+                if (clearCapsule[checkRoom] == "unoccupied")
                 {
-                    Console.WriteLine("Error, this capsule is already unoccupied. Please enter another capsule number: ");
-                    checkRoom = int.Parse(Console.ReadLine());
+                    Console.WriteLine($"\nError, capsule #{checkRoom + 1} is already unoccupied. Please enter another capsule number: ");
+                    input = ValidateAll(Console.ReadLine(), totalCapsuleAvail);
+                    checkRoom = int.Parse(input);
                 }
                 else
                 {
                     string holdName = clearCapsule[checkRoom];
                     clearCapsule[checkRoom] = "unoccupied";
-                    Console.WriteLine($"{holdName + 1} is checked out from capsule #{checkRoom + 1}.");
-                    isOccupied = false;
+                    Console.WriteLine($"\n{holdName} is checked out from capsule #{checkRoom + 1}.");
+                    return clearCapsule;
                 }
 
             }
-
             return clearCapsule;
+
         }
 
         private static string SelectFromMenu()
