@@ -99,7 +99,7 @@ Exit [y/n]: ");
             while (isInt) { 
             if (int.TryParse(validate, out int value))
             {
-                if(int.Parse(validate) > 0 && int.Parse(validate) < totalCapsuleAvail)
+                if(int.Parse(validate) > 0 && int.Parse(validate) <= totalCapsuleAvail)
                     {
                         return validate;
 
@@ -147,7 +147,7 @@ Exit [y/n]: ");
                     Console.WriteLine($"{i + 1}: {capsules[i]} ");
                 }
             }
-            else if (checkNum > 95 && checkNum < 101)
+            else if (checkNum > (totalCapsuleAvail-5) && checkNum <= totalCapsuleAvail)
             {
                 for (int i = checkNum - countCapsuleTotal - 1; i < totalCapsuleAvail; i++)
                 {
@@ -172,14 +172,14 @@ Exit [y/n]: ");
             string guestName = Console.ReadLine();
             Console.WriteLine($"Capsule #[1-{totalCapsuleAvail}]: ");
             string roomInput = ValidateAll((Console.ReadLine()), totalCapsuleAvail);
-            int checkRoom = int.Parse(roomInput);
+            int checkRoom = int.Parse(roomInput)-1;
             bool isEmpty = true;
             while (isEmpty)
             {
                 if (assignCapsule[checkRoom] == "unoccupied")
                 {
-                    assignCapsule[checkRoom -1] = guestName;
-                    Console.WriteLine($"Capsule is empty. {guestName} is booked in capsule# {checkRoom}");
+                    assignCapsule[checkRoom] = guestName;
+                    Console.WriteLine($"Capsule is empty. {guestName} is booked in capsule# {checkRoom + 1}");
                     isEmpty = false;
                 }
                 else
@@ -200,7 +200,7 @@ Exit [y/n]: ");
             // validate if input is an int
             string input = ValidateAll((Console.ReadLine()), totalCapsuleAvail);
             // parse string to int type
-            int checkRoom = int.Parse(input) + 1;
+            int checkRoom = int.Parse(input)-1;
             
             while (isOccupied)
             {
@@ -214,7 +214,7 @@ Exit [y/n]: ");
                 {
                     string holdName = clearCapsule[checkRoom];
                     clearCapsule[checkRoom] = "unoccupied";
-                    Console.WriteLine($"{holdName} is checked out from capsule #{checkRoom}.");
+                    Console.WriteLine($"{holdName + 1} is checked out from capsule #{checkRoom + 1}.");
                     isOccupied = false;
                 }
 
