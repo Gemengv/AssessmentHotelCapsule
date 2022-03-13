@@ -22,6 +22,7 @@ namespace AssessmentCapsuleHotel
                         break;
                     case "2":
                         //check out guess
+                        
                         CheckOut(capsules);
                         break;
                     case "3":
@@ -49,54 +50,9 @@ Exit [y/n]: ");
             }
 
         }
-        private static string CheckIfNum(string validate)
-        {
-            double checkNum;
-            string hold = validate;
 
-            if (!double.TryParse(validate, out checkNum))
-            {
-                Console.Write("Please enter in a number between 1 and 100.");
-                //hold = Console.WriteLine();
-            }
-
-            return validate;
-        }
-        private static string CheckDecimal(string validate)
-        {
-            bool checkDecimal = true;
-
-            while (checkDecimal)
-            {
-                if (validate.Contains("."))
-                {
-                    Console.WriteLine("Please enter a whole number between 1 and 100.");
-                    validate = Console.ReadLine();
-                }
-            }
-            return validate;
-        }
-        private static string CheckNumInrange(string validate)
-        {
-            CheckDecimal(validate);
-            int num = int.Parse(validate);
-            bool checkNum = true;
-
-            while (checkNum)
-            {
-                if (num > 0 && num < 101)
-                {
-                    return validate;
-                }
-                else
-                {
-                    Console.WriteLine("Please enter a number between 1 and 100.");
-                    num = int.Parse(Console.ReadLine());
-                }
-            }
-
-            return null;
-        }
+    
+        
 
 
         private static string[] AssignUnoccupied(string[] nameIndicies)
@@ -111,12 +67,37 @@ Exit [y/n]: ");
 
         private static string[] ViewCapsules(string[] capsules)
         {
-            for (int i = 0; i < capsules.Length; i++)
+            Console.WriteLine("Please enter in the capsule you want to check: ");
+            int checkNum = int.Parse(Console.ReadLine()); 
+             
+            int countBelow5 = 10 - checkNum;
+
+            int countAbove95 = checkNum - 90;
+
+            if (checkNum > 0 && checkNum < 6)
             {
-                Console.WriteLine($"{i + 1}: {capsules} ");
+                for (int i = 0; i <= checkNum + countBelow5; i++)
+                {
+                    Console.WriteLine($"{i + 1}: {capsules[i]} ");
+                }
+            }
+            else if (checkNum > 95 && checkNum < 101)
+            {
+                for (int i = checkNum - countAbove95 - 1; i <= 99  ; i++)
+                {
+                    Console.WriteLine($"{i+1}: {capsules[i]} ");
+                }
+            }
+            else
+            {
+
+                for (int i = checkNum - 6; i < checkNum + 5; i++)
+                {
+                    Console.WriteLine($"{i + 1}: {capsules[i]} ");
+                }
             }
 
-            return null;
+            return capsules;
         }
 
         private static string[] CheckIn(string[] assignCapsule)
@@ -124,7 +105,7 @@ Exit [y/n]: ");
             Console.WriteLine("Guest Name: ");
             string guestName = Console.ReadLine();
             Console.WriteLine("Capsule #[1-100]: ");
-            string roomInput = CheckNumInrange(Console.ReadLine());
+            string roomInput = (Console.ReadLine());
             int checkRoom = int.Parse(roomInput) - 1;
             bool isEmpty = true;
             while (isEmpty)
@@ -149,10 +130,11 @@ Exit [y/n]: ");
 
         private static string[] CheckOut(string[] clearCapsule)
         {
+            bool isOccupied = true; 
+
             Console.WriteLine("Which capsule are you checking out?");
             int checkRoom = int.Parse(Console.ReadLine()) - 1;
-            bool isOccupied = true;
-
+            
             while (isOccupied)
             {
                 if(clearCapsule[checkRoom] == "unoccupied")
@@ -214,7 +196,17 @@ Choose on option [1-4]:");
             }
             return input;
         }
-
+       
+        private static bool Same(string[] check)
+        {
+            string first = "occupied";
+            for(int i = 1; i < check.Length; i++)
+                if(check[i] == first)
+                {
+                    return false;
+                }
+            return true;
+        }
     }
 
 }
